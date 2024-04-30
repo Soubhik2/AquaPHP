@@ -1,0 +1,32 @@
+{
+    "name": "AquaPHP",
+    "version": "1.0.0",
+    "lockfileVersion": 3,
+    "requires": true,
+    "packages": {
+        "core": {
+            "name": "core",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/core.php"
+        },
+        "router": {
+            "name": "core",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/router/initialise.php"
+        },
+        "database": {
+            "name": "core",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/database/initialise.php"
+        },
+        "auth": {
+            "name": "core",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/auth/initialise.php"
+        }
+    }
+}
