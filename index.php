@@ -1,7 +1,7 @@
 <?php
 
 define("BASEPATH", __DIR__);
-$pass_url = 'CPHP';
+$pass_url = 'AquaPHP';
 $localhost = $_SERVER["SERVER_NAME"];
 define("BASEURL", "http://$localhost/$pass_url/");
 $request = $_SERVER['REQUEST_URI'];
@@ -36,7 +36,7 @@ function url($a_url){
     return BASEURL.$a_url;
 }
 
-function import($path){
+function import_modules($path){
     // return BASEPATH.$config_lock->packages->core->path;
     global $config_lock;
     try {
@@ -47,4 +47,4 @@ function import($path){
     }
 }
 
-require_once import("core");
+require_once import_modules("core");
