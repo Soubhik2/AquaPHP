@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $request = str_replace("/$pass_url",'',$request);
-$requests = explode('/', $request);
+$request = explode('?', $request)[0];
 
 if ($config->config->project == "development") {
     error_reporting(E_ERROR | E_PARSE);

@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once "interface.php";
+require_once "request.php";
+require_once "response.php";
 require_once "router.php";
 
 class AppRouter {

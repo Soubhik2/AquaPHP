@@ -27,10 +27,10 @@ if (file_exists($load_config_lock)) {
     echo "File not found!";
 }
 
-echo "<pre>";
+// echo "<pre>";
 // print_r($config);
 // print_r($config_lock);
-echo "</pre>";
+// echo "</pre>";
 
 function url($a_url){
     return BASEURL.$a_url;

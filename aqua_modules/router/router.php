@@ -1,53 +1,50 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Routers implements Routes {
+class Routers {
     private $isPage = false;
     
+    public function __construct() {
+        $this->req = new Request();
+        $this->res = new Response();
+    }
+
     public function get($req, $callbacks){
-        global $request;
-        // $key = str_replace("/:any",'\/[a-z]/i',$key);
-        // $key = str_replace("/:num",'\/[0-9]/i',$key);
-
-        $arr_req = explode('/',$req);
-        
-        $arr_req = array_map(function($value){
-            if (stripos($value, ':') !== false) {
-                return '\/[a-z]/i';
-            } else {
-                return $value;
-            }
-        }, $arr_req);
-
-        echo '<pre>';
-        print_r($arr_req);
-        echo '</pre>';
-
-        $req = implode("/", $arr_req);
-        $req = str_replace('/\\', '\\',$req);
-
-        echo $req.'<br>';
-
-        if (!$this->isPage) {
-            if ($request == $req || preg_match($req, $request) || '/404' == $req) {
-        
-                // for ($i=1; $i < count($pages); $i++) { 
-                //     // echo $pages[$i].'='.$requests[$i+1].'<br>';
-                //     $req_values = explode("?", $requests[$i+1]);
-                //     eval('$'.$pages[$i].'="'.$req_values[0].'";');
-                // }
-        
-                // require_once BASEPATH . $viewDir . $pages[0].'.php';
-                // $isPage = TRUE;
-                
-                $callbacks();
+        // global $request;
+        // echo $request.'<br>';
+        $params = [];
+        if (!$this->isPage && $_SERVER["REQUEST_METHOD"] == "GET") {
+            if (($this->req->params = $this->findMatchedRoute($req)) || '/404' == $req) {
+                $callbacks($this->req, $this->res);
                 $this->isPage = true;
             }
         }
-
     }
 
     public function post($req, $callbacks){
-        $callbacks();
+        $params = [];
+        if (!$this->isPage && $_SERVER["REQUEST_METHOD"] == "POST") {
+            if (($params = $this->findMatchedRoute($req)) || '/404' == $req) {
+                $callbacks($this->req, $this->res);
+                $this->isPage = true;
+            }
+        }
+    }
+
+    private function findMatchedRoute($pattern) {
+        $pattern = preg_replace('/\//', '\/', $pattern);
+        $pattern = preg_replace('/\{([a-zA-Z]+)\}/', '(?P<\1>[^\/]+)', $pattern);
+        $pattern = '/^' . $pattern . '$/';
+        global $request;
+        if (preg_match($pattern, $request, $matches)) {
+            $params = [];
+            foreach ($matches as $key => $value) {
+                if (!is_numeric($key)) {
+                    $params[$key] = $value;
+                }
+            }
+            return (object) $params;
+        }
+        return false;
     }
 }
