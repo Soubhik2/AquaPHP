@@ -16,6 +16,18 @@
             "license": "ISC",
             "path": "/aqua_modules/router/initialise.php"
         },
+        "controller": {
+            "name": "core",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/controller/initialise.php"
+        },
+        "model": {
+            "name": "core",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/model/initialise.php"
+        },
         "database": {
             "name": "core",
             "version": "1.0.0",

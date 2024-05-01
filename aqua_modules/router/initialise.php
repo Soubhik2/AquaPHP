@@ -10,18 +10,6 @@ class AppRouter {
 
     public function __construct() {
         $this->app = new Routers();
-
-        global $config;
-        $directory = BASEPATH.$config->config->controller_dir;
-        $files = scandir($directory);
-
-        foreach ($files as $file) {
-            if ($file != "." && $file != "..") {
-                $arr = explode('.',$file);
-                eval('require_once $directory."'.$arr[0].'.php";');
-                eval('$this->'.strtolower($arr[0]).' = new '.$arr[0].'();');
-            }
-        }
     }
 }
 

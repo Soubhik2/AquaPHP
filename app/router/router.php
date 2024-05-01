@@ -5,12 +5,18 @@ class Router extends AppRouter {
     public function router() {
 
         $this->app->get("/",function($req, $res){
-            echo "this is /";    
-            echo "<pre>";
-            print_r($req);
-            echo "</pre>";
+            // echo "this is /";    
+            // echo "<pre>";
+            // print_r($req);
+            // echo "</pre>";
 
-            require_once BASEPATH."/app/views/welcome.php";
+            // $res->status(200)->send('welcome');
+            // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
+
+            // $res->cookie('pass','hello');
+            // $res->session("login",["user"=>"name", "pass"=>"pass"]);
+
+            $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
 
         });
 
@@ -28,7 +34,8 @@ class Router extends AppRouter {
             echo "</pre>";
         });
 
-        $this->app->get("/home",[$this->home,'home']);
+        $this->app->get("/home",'Home/home');
+        $this->app->post("/home",'Home/about');
 
         // 404 page Note set this to the end
         $this->app->get("/404",function($req, $res){
