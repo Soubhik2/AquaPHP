@@ -14,5 +14,6 @@ if ($config->config->project == "deploy") {
     ini_set('display_errors', 'Off');
 }
 
+require_once import_modules("model");
 require_once import_modules("controller");
 require_once import_modules("router");

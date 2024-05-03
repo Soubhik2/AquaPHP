@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Routers {
-    private $isPage = false;
     
     public function __construct() {
         $this->req = new Request();
@@ -13,11 +12,12 @@ class Routers {
     public function get($req, $callbacks){
         // global $request;
         // echo $request.'<br>';
+        // echo $req.'<br>';
         // echo "<pre>";
-        // print_r($this->controller->home->home("d",'w'));
+        // print_r($this->controller);
         // echo "</pre>";
         $params = [];
-        if (!$this->isPage && $_SERVER["REQUEST_METHOD"] == "GET") {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if (($this->req->params = $this->findMatchedRoute($req)) || '/404' == $req) {
                 if (is_string($callbacks)) {
                     $calls = explode('/', $callbacks);
@@ -26,14 +26,14 @@ class Routers {
                     $callbacks = [$this->controller->$className,$methodName];
                 }
                 $callbacks($this->req, $this->res);
-                $this->isPage = true;
+                exit();
             }
         }
     }
 
     public function post($req, $callbacks){
         $params = [];
-        if (!$this->isPage && $_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (($params = $this->findMatchedRoute($req)) || '/404' == $req) {
                 if (is_string($callbacks)) {
                     $calls = explode('/', $callbacks);
@@ -42,7 +42,7 @@ class Routers {
                     $callbacks = [$this->controller->$className,$methodName];
                 }
                 $callbacks($this->req, $this->res);
-                $this->isPage = true;
+                exit();
             }
         }
     }

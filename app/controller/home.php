@@ -7,6 +7,9 @@ class Home extends AppController {
         // echo "<pre>";
         // print_r($req);
         // echo "</pre>";
+
+        $Test = $this->model->test;
+        echo "<br>".$Test->hello("PUBG");
     }
 
     public function about($req, $res){

@@ -5,10 +5,13 @@ class Router extends AppRouter {
     public function router() {
 
         $this->app->get("/",function($req, $res){
-            // echo "this is /";    
+            // echo "this is /";   
             // echo "<pre>";
             // print_r($req);
             // echo "</pre>";
+
+            $Test = $this->model->test;
+            echo "<br>".$Test->hello("PUBG");
 
             // $res->status(200)->send('welcome');
             // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
@@ -27,12 +30,7 @@ class Router extends AppRouter {
             echo "</pre>";
         });
 
-        $this->app->get("/blog/{id}",function($req, $res){
-            echo "this is /blog";
-            echo "<pre>";
-            print_r($req);
-            echo "</pre>";
-        });
+        $this->app->get("/blog/{id}",'Blog/index');
 
         $this->app->get("/home",'Home/home');
         $this->app->post("/home",'Home/about');

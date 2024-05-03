@@ -17,11 +17,13 @@ class Response{
         global $config;
         http_response_code($this->status);
         require_once BASEPATH.$config->config->view_dir.$page.".php";
+        exit();
     }
 
     public function json($json){
         http_response_code($this->status);
         echo json_encode($json);
+        exit();
     }
 
     public function render($page, $json = null){
@@ -41,6 +43,7 @@ class Response{
             }
         }
         require_once BASEPATH.$config->config->view_dir.$page.".php";
+        exit();
     }
 
     public function cookie($name, $value, $expires=86400, $path="/", $domain="", $secure=false, $httponly=false){

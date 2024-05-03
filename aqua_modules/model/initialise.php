@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UiController {
+class AppModel {
     public function __construct() {
         global $config;
-        $directory = BASEPATH.$config->config->controller_dir;
+        $directory = BASEPATH.$config->config->model_dir;
         $files = scandir($directory);
 
         // $dir = opendir($directory);
@@ -25,5 +25,3 @@ class UiController {
         }
     }
 }
-
-require_once 'controller.php';
