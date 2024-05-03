@@ -21,7 +21,7 @@
     "license": "ISC",
     "dependencies": {
         "database": {
-            "enable": false,
+            "enable": true,
             "path": "database"
         },
         "auth": {

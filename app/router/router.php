@@ -6,9 +6,10 @@ class Router extends AppRouter {
 
         $this->app->get("/",function($req, $res){
             // echo "this is /";   
-            // echo "<pre>";
-            // print_r($req);
-            // echo "</pre>";
+            echo "<pre>";
+            print_r($this->db);
+            print_r($this->conn);
+            echo "</pre>";
 
             $Test = $this->model->test;
             echo "<br>".$Test->hello("PUBG");
@@ -18,6 +19,7 @@ class Router extends AppRouter {
 
             // $res->cookie('pass','hello');
             // $res->session("login",["user"=>"name", "pass"=>"pass"]);
+
 
             $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
 

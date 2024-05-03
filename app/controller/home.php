@@ -8,6 +8,11 @@ class Home extends AppController {
         // print_r($req);
         // echo "</pre>";
 
+        echo "<pre>";
+        print_r($this->db);
+        print_r($this->conn);
+        echo "</pre>";
+
         $Test = $this->model->test;
         echo "<br>".$Test->hello("PUBG");
     }

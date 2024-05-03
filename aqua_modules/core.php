@@ -14,6 +14,10 @@ if ($config->config->project == "deploy") {
     ini_set('display_errors', 'Off');
 }
 
+if ($config->dependencies->database->enable) {
+    require_once import_modules($config->dependencies->database->path);
+}
+
 require_once import_modules("model");
 require_once import_modules("controller");
 require_once import_modules("router");

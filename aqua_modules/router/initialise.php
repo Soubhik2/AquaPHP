@@ -11,6 +11,8 @@ class AppRouter {
     public function __construct() {
         $this->app = new Routers();
         $this->model = new AppModel();
+        $this->db = new Database();
+        $this->conn = $this->db->connect();
     }
 }
 
