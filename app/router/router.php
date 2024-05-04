@@ -7,15 +7,34 @@ class Router extends AppRouter {
         $this->app->get("/",function($req, $res){
             // echo "this is /";   
             echo "<pre>";
-            print_r($this->db);
-            print_r($this->conn);
+            // print_r($this->db->select("student", "WHERE `name` = 'soubhik1'")->get());
+            // print_r($this->db->select("student")->get());
+            // print_r($this->db->select("student", ["id"=>"name", "or name"=>"game", "price >"=>"1000"]));
+            print_r($this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
+                $value->name .= " set";
+                // $value->add = $this->db->select("contact", ["id"=>$value->id])->get();
+                $arr = $this->db->select("contact", ["id"=>$value->id])->get()[0];
+
+                foreach ($arr as $key => $element) {
+                    $value->$key = $element;
+                }
+
+                return $value;
+            }));
+            // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>(array)$v));
+            // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>json_encode($v)));
             echo "</pre>";
 
-            $Test = $this->model->test;
-            echo "<br>".$Test->hello("PUBG");
+            // $this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
+            //     echo "<h1>$value->name</h1>";
+            // });
+
+            // $Test = $this->model->test;
+            // echo "<br>".$Test->hello("PUBG");
 
             // $res->status(200)->send('welcome');
             // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
+            // $res->status(200)->json($this->db->select("student", ["name like"=>"%sou%"])->get());
 
             // $res->cookie('pass','hello');
             // $res->session("login",["user"=>"name", "pass"=>"pass"]);

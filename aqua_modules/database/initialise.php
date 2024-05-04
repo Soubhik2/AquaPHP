@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once 'runner.php';
+
 class Database{
     private $conn;
     private $subQuery = "";
@@ -22,5 +24,82 @@ class Database{
             $this->error = $e;
         }
         return $this->conn;
+    }
+
+    public function select($table, $query = null) {
+        if ($query != null) {
+            if (is_array($query)) {
+                $query = "SELECT * FROM `$table` ".$this->query_builder($query);
+            } else {
+                $query = "SELECT * FROM `$table` ".$query;
+            }
+            
+        }else{
+            $query = "SELECT * FROM `$table`";
+        }
+        // return $query;
+        return new Runner($this, $query);
+    }
+
+    public function insert($table, $query = null) {
+        if ($query != null) {
+            if (is_array($query)) {
+                $query = "SELECT * FROM `$table` ".$this->query_builder($query);
+            } else {
+                $query = "SELECT * FROM `$table` ".$query;
+            }
+            
+        }else{
+            $query = "SELECT * FROM `$table`";
+        }
+        // return $query;
+        return new Runner($this, $query);
+    }
+
+    public function query($query){
+        return new Runner($this, $query);
+    }
+
+    public function conn(){
+        // echo 'hello';
+        return $this->conn;
+    }
+
+    private function query_builder($arr){
+        $query = 'WHERE ';
+        $i = 0;
+        foreach ($arr as $key => $value) {
+            $sub = "";
+            $type = "AND";
+
+            $key_arr = explode(' ',$key);
+
+            if (strpos(strtoupper($key), "OR") !== false) {
+                array_shift($key_arr);
+                $type = "OR";
+            }
+            if (strpos(strtoupper($key), "AND") !== false) {
+                array_shift($key_arr);
+                $type = "AND";
+            }
+
+            if ($i <= 0) {
+                if (count($key_arr) > 1) {
+                    $sub = "`".$key_arr[0]."` ".strtoupper($key_arr[1])." '".$value."'";
+                }else{
+                    $sub = "`".$key_arr[0]."` = '".$value."'";
+                }
+            } else {
+                if (count($key_arr) > 1) {
+                    $sub = " $type `".$key_arr[0]."` ".strtoupper($key_arr[1])." '".$value."'";
+                }else{
+                    $sub = " $type `".$key_arr[0]."` = '".$value."'";
+                }
+            }
+            
+            $query .= $sub;
+            $i++;
+        }
+        return $query;
     }
 }
