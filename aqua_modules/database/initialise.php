@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once 'runner.php';
+require_once 'setter.php';
 
 class Database{
     private $conn;
@@ -41,19 +42,13 @@ class Database{
         return new Runner($this, $query);
     }
 
-    public function insert($table, $query = null) {
-        if ($query != null) {
-            if (is_array($query)) {
-                $query = "SELECT * FROM `$table` ".$this->query_builder($query);
-            } else {
-                $query = "SELECT * FROM `$table` ".$query;
-            }
-            
-        }else{
-            $query = "SELECT * FROM `$table`";
-        }
-        // return $query;
-        return new Runner($this, $query);
+    public function insert($table) {
+        $query = "INSERT INTO $table (";
+        return new Setter($this, $query);
+    }
+    public function update($table, $data) {
+        $query = "UPDATE $table SET ";
+        return new Setter($this, $query);
     }
 
     public function query($query){

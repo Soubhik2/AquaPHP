@@ -7,22 +7,50 @@ class Router extends AppRouter {
         $this->app->get("/",function($req, $res){
             // echo "this is /";   
             echo "<pre>";
+            // SELECT
             // print_r($this->db->select("student", "WHERE `name` = 'soubhik1'")->get());
             // print_r($this->db->select("student")->get());
             // print_r($this->db->select("student", ["id"=>"name", "or name"=>"game", "price >"=>"1000"]));
-            print_r($this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
-                $value->name .= " set";
-                // $value->add = $this->db->select("contact", ["id"=>$value->id])->get();
-                $arr = $this->db->select("contact", ["id"=>$value->id])->get()[0];
+            // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
+            //     $value->name .= " set";
+            //     // $value->add = $this->db->select("contact", ["id"=>$value->id])->get();
+            //     $arr = $this->db->select("contact", ["id"=>$value->id])->get()[0];
 
-                foreach ($arr as $key => $element) {
-                    $value->$key = $element;
-                }
+            //     foreach ($arr as $key => $element) {
+            //         $value->$key = $element;
+            //     }
 
-                return $value;
-            }));
+            //     return $value;
+            // }));
+            // echo $this->db->select('student')->count();
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>(array)$v));
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>json_encode($v)));
+
+            // INSERT
+            $this->db->insert('student')->set(["name"=>"test1", "city"=>"game"],
+            function($r){
+                // then
+                print_r($r);
+            }, 
+            function($e){
+                // catch
+                print_r($e);
+            });
+
+            // echo "<br>";
+            // $this->db->insert('student')->set("INSERT INTO student (name, city) VALUES ('test2', 'game')",
+            // function($r){
+            //     // then
+            //     print_r($r);
+            // }, 
+            // function($e){
+            //     // catch
+            //     print_r($e);
+            // });
+
+            // UPDATE
+
+            
             echo "</pre>";
 
             // $this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
@@ -32,6 +60,7 @@ class Router extends AppRouter {
             // $Test = $this->model->test;
             // echo "<br>".$Test->hello("PUBG");
 
+            // RES
             // $res->status(200)->send('welcome');
             // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
             // $res->status(200)->json($this->db->select("student", ["name like"=>"%sou%"])->get());
