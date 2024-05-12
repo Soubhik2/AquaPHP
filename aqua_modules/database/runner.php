@@ -15,6 +15,7 @@ class Runner {
         $result = $this->conn->query($this->query);
         $arr = [];
 
+        // return $this->query;
         if ($result->num_rows > 0) {
             // Output data of each row
             while ($row = $result->fetch_object()) {

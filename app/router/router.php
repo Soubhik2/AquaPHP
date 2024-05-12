@@ -10,6 +10,7 @@ class Router extends AppRouter {
             // SELECT
             // print_r($this->db->select("student", "WHERE `name` = 'soubhik1'")->get());
             // print_r($this->db->select("student")->get());
+            // print_r($this->db->select("student", null, ["name"])->get());
             // print_r($this->db->select("student", ["id"=>"name", "or name"=>"game", "price >"=>"1000"]));
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
             //     $value->name .= " set";
@@ -27,29 +28,29 @@ class Router extends AppRouter {
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>json_encode($v)));
 
             // INSERT
-            $this->db->insert('student')->set(["name"=>"test1", "city"=>"game"],
-            function($r){
-                // then
-                print_r($r);
-            }, 
-            function($e){
-                // catch
-                print_r($e);
-            });
-
-            // echo "<br>";
-            // $this->db->insert('student')->set("INSERT INTO student (name, city) VALUES ('test2', 'game')",
-            // function($r){
-            //     // then
-            //     print_r($r);
-            // }, 
-            // function($e){
-            //     // catch
-            //     print_r($e);
+            // $this->db->insert('student',["name"=>"test2", "city"=>"game"])->then(function($v){
+            //     print_r("DONE");
+            // })->catch(function($e){
+            //     print_r("ERROR");
             // });
 
-            // UPDATE
+            // print_r($this->db->insert('student',["name1"=>"test2", "city"=>"game"]));
 
+            // UPDATE
+            // print_r($this->db->update('student', ["id"=>'31'], ["name"=>"test3", "city"=>"game"]));
+            // $this->db->update('student', ["id"=>'31'], ["name"=>"test3", "city"=>"game"])->then(function($v){
+            //     echo "DONE";
+            // })->catch(function($e){
+            //     echo "ERROR";
+            // });
+
+            // DELETE
+            // print_r($this->db->delete('student', ["id"=>'31']));
+            // $this->db->delete('student', ["id"=>'32'])->then(function($v){
+            //     echo "DONE";
+            // })->catch(function($e){
+            //     echo "ERROR";
+            // });
             
             echo "</pre>";
 
@@ -84,6 +85,7 @@ class Router extends AppRouter {
 
         $this->app->get("/home",'Home/home');
         $this->app->post("/home",'Home/about');
+        $this->app->get("/about",'Home/about');
 
         // 404 page Note set this to the end
         $this->app->get("/404",function($req, $res){

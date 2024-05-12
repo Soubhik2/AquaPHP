@@ -19,6 +19,10 @@ class Home extends AppController {
 
     public function about($req, $res){
         echo "this is /about";
+        
+        // $res->redirect("home");
+        // $res->redirect("https://chatgpt.com/", false);
+
         // echo "<pre>";
         // print_r($req);
         // echo "</pre>";

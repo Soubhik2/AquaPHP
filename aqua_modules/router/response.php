@@ -13,6 +13,15 @@ class Response{
         return $this;
     }
 
+    public function redirect($page, $url = true){
+        if ($url) {
+            header("Location: ".BASEURL.$page);
+        }else{
+            header("Location: $page");
+        }
+        exit();
+    }
+
     public function send($page){
         global $config;
         http_response_code($this->status);
