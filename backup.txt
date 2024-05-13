@@ -37,3 +37,39 @@
         //         $this->isPage = true;
         //     }
         // }
+
+
+json
+
+{
+    "name": "AquaPHP",
+    "version": "1.0.0",
+    "description": "AquaPHP is a MVC framework",
+    "main": "index.php",
+    "type": "php framework",
+    "config": {
+        "project": "development",
+        "view_dir": "/app/views/",
+        "controller_dir": "/app/controller/",
+        "model_dir": "/app/model/",
+        "router_dir": "/app/router/",
+        "database": {
+            "host": "localhost",
+            "username": "root",
+            "password": "",
+            "database": "javajdbc"
+        }
+    },
+    "author": "Soubhik Mukherjee",
+    "license": "ISC",
+    "dependencies": {
+        "database": {
+            "enable": true,
+            "path": "database"
+        },
+        "auth": {
+            "enable": false,
+            "path": "auth"
+        }
+    }
+}
