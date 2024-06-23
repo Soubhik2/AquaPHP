@@ -2,6 +2,7 @@ import os
 import subprocess
 import time
 import json
+import requests
 
 # ANSI escape codes for text colors
 color_red = '\033[91m'
@@ -43,39 +44,65 @@ def init():
     print(color_green+"\nProject Initiated"+color_reset)
 
 def install(command):
-    print(color_purple+"Install Starting..."+color_reset)
-    time.sleep(1)
-    with open('config.json', 'r') as file:
-        # Read the entire contents of the file
-        file_contents = file.read()
-        file_contents = json.loads(file_contents)
-        file_contents["dependencies"][command] = {
-            "enable": False,
-            "path": "auth"
-        }
-        file_contents = json.dumps(file_contents, indent=4)
-        # print(file_contents)
-        # Print the contents
 
-    with open('config.json', 'w') as f:
-        f.write(file_contents)
+    url = 'http://localhost/api'
+
+    payload = {
+        'key1': 'value1',
+        'key2': 'value2'
+    }
+
+    json_payload = json.dumps(payload)
+
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+    }
+
+    # response = requests.get(url)
+    response = requests.post(url, data=json_payload, headers=headers)
+
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        data = response.json()  # Parse JSON response into a Python dictionary or list
+        print(data)
+        # print(data["name"])
+    else:
+        print('Error:', response.status_code)
+
+    # print(color_purple+"Install Starting..."+color_reset)
+    # time.sleep(1)
+    # with open('config.json', 'r') as file:
+    #     # Read the entire contents of the file
+    #     file_contents = file.read()
+    #     file_contents = json.loads(file_contents)
+    #     file_contents["dependencies"][command] = {
+    #         "enable": False,
+    #         "path": "auth"
+    #     }
+    #     file_contents = json.dumps(file_contents, indent=4)
+    #     # print(file_contents)
+    #     # Print the contents
+
+    # with open('config.json', 'w') as f:
+    #     f.write(file_contents)
     
-    with open('config-lock.json', 'r') as file:
-        # Read the entire contents of the file
-        file_contents = file.read()
-        file_contents = json.loads(file_contents)
-        file_contents["packages"][command] = {
-            "name": "core",
-            "version": "1.0.0",
-            "license": "ISC",
-            "path": "/aqua_modules/auth/initialise.php"
-        }
-        file_contents = json.dumps(file_contents, indent=4)
-        # print(file_contents)
-        # Print the contents
+    # with open('config-lock.json', 'r') as file:
+    #     # Read the entire contents of the file
+    #     file_contents = file.read()
+    #     file_contents = json.loads(file_contents)
+    #     file_contents["packages"][command] = {
+    #         "name": "core",
+    #         "version": "1.0.0",
+    #         "license": "ISC",
+    #         "path": "/aqua_modules/auth/initialise.php"
+    #     }
+    #     file_contents = json.dumps(file_contents, indent=4)
+    #     # print(file_contents)
+    #     # Print the contents
 
-    with open('config-lock.json', 'w') as f:
-        f.write(file_contents)
+    # with open('config-lock.json', 'w') as f:
+    #     f.write(file_contents)
 
 #     _                     _____  _   _ _____
 #    / \   __ _ _   _     _|  __ \| | | |  __ \
@@ -87,13 +114,14 @@ def install(command):
 print(color_green+'''
     _                     _____  _   _ _____
    / \\   __ _ _   _     _|  __ \| | | |  __ \\
-  / _ \\ / _` | | | |/ _` | |__| | |_| | |__| |
+'''+'''  / _ \\ / _` | | | |/ _` | |__| | |_| | |__| |'''+ color_purple+'''
  / ___ \\ (_| | |_| | (_| |  ___/|  _  |  ___/
 /_/   \\_\\__,_|\\___/\\__,_ | |    | | | | |
            |_|           |_|    |_| |_|_|
 ''')
 
-print(color_yellow+"Install Package")
+print(color_blue+"1. Initialise use \"init\"")
+print("2. Install use \"install package_name\" ")
 
 while True:
     command = input(color_purple+"\n>>> "+color_reset) 
@@ -108,4 +136,4 @@ while True:
     elif command == "exit":
         break
     else:
-        print("command not found")
+        print(color_red+"\""+command+"\""+" <- This Command Not Found")
