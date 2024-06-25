@@ -43,20 +43,67 @@ def init():
 
     print(color_green+"\nProject Initiated"+color_reset)
 
-def install(command):
+def set_package(data, command):
+    print(color_blue+"installing packages...\n")
+    
+    # print(data["package"])
+    
+    time.sleep(1)
 
+    # print(color_purple+"Install Starting..."+color_reset)
+    # time.sleep(1)
+
+    with open('config.json', 'r') as file:
+        # Read the entire contents of the file
+        file_contents = file.read()
+        file_contents = json.loads(file_contents)
+        # file_contents["dependencies"][command] = {
+        #     "enable": False,
+        #     "path": "auth"
+        # }
+        file_contents["dependencies"][command] = data["config"][command]
+        file_contents = json.dumps(file_contents, indent=4)
+        # print(file_contents)
+        # Print the contents
+
+    with open('config.json', 'w') as f:
+        f.write(file_contents)
+    
+    with open('config-lock.json', 'r') as file:
+        # Read the entire contents of the file
+        file_contents = file.read()
+        file_contents = json.loads(file_contents)
+        # file_contents["packages"][command] = {
+        #     "name": "core",
+        #     "version": "1.0.0",
+        #     "license": "ISC",
+        #     "path": "/aqua_modules/auth/initialise.php"
+        # }
+        file_contents["packages"][command] = data["config-lock"][command]
+        file_contents = json.dumps(file_contents, indent=4)
+        # print(file_contents)
+        # Print the contents
+
+    with open('config-lock.json', 'w') as f:
+        f.write(file_contents)
+
+    print(color_green+"\npackage installed")
+
+def install(command):
+    print(color_blue+"preparing to install... \n")
     url = 'http://localhost/api'
 
+    commands = command.split()
+
     payload = {
-        'key1': 'value1',
-        'key2': 'value2'
+        'name': commands[1],
     }
 
     json_payload = json.dumps(payload)
 
     headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer YOUR_API_TOKEN'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_API_TOKEN'
     }
 
     # response = requests.get(url)
@@ -65,44 +112,17 @@ def install(command):
     # Check if the request was successful (status code 200)
     if response.status_code == 200:
         data = response.json()  # Parse JSON response into a Python dictionary or list
-        print(data)
+        time.sleep(1)
+        print(color_blue+"package found...\n")
+        set_package(data, commands[1])
+        # print(data)
         # print(data["name"])
     else:
-        print('Error:', response.status_code)
+        data = response.json()
+        # print('Error:', response.status_code)
+        print(color_red+data["message"])
 
-    # print(color_purple+"Install Starting..."+color_reset)
-    # time.sleep(1)
-    # with open('config.json', 'r') as file:
-    #     # Read the entire contents of the file
-    #     file_contents = file.read()
-    #     file_contents = json.loads(file_contents)
-    #     file_contents["dependencies"][command] = {
-    #         "enable": False,
-    #         "path": "auth"
-    #     }
-    #     file_contents = json.dumps(file_contents, indent=4)
-    #     # print(file_contents)
-    #     # Print the contents
-
-    # with open('config.json', 'w') as f:
-    #     f.write(file_contents)
     
-    # with open('config-lock.json', 'r') as file:
-    #     # Read the entire contents of the file
-    #     file_contents = file.read()
-    #     file_contents = json.loads(file_contents)
-    #     file_contents["packages"][command] = {
-    #         "name": "core",
-    #         "version": "1.0.0",
-    #         "license": "ISC",
-    #         "path": "/aqua_modules/auth/initialise.php"
-    #     }
-    #     file_contents = json.dumps(file_contents, indent=4)
-    #     # print(file_contents)
-    #     # Print the contents
-
-    # with open('config-lock.json', 'w') as f:
-    #     f.write(file_contents)
 
 #     _                     _____  _   _ _____
 #    / \   __ _ _   _     _|  __ \| | | |  __ \
@@ -116,12 +136,12 @@ print(color_green+'''
    / \\   __ _ _   _     _|  __ \| | | |  __ \\
 '''+'''  / _ \\ / _` | | | |/ _` | |__| | |_| | |__| |'''+ color_purple+'''
  / ___ \\ (_| | |_| | (_| |  ___/|  _  |  ___/
-/_/   \\_\\__,_|\\___/\\__,_ | |    | | | | |
+/_/   \\_\\__,_|\\___/ \\__,_| |    | | | | |
            |_|           |_|    |_| |_|_|
 ''')
 
 print(color_blue+"1. Initialise use \"init\"")
-print("2. Install use \"install package_name\" ")
+print("2. Install use \"install 'package_name'\" ")
 
 while True:
     command = input(color_purple+"\n>>> "+color_reset) 

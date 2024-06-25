@@ -24,9 +24,9 @@
             "enable": true,
             "path": "database"
         },
-        "auth": {
+        "db": {
             "enable": false,
-            "path": "auth"
+            "path": "db"
         }
     }
 }

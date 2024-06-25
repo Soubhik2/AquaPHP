@@ -34,8 +34,8 @@
             "license": "ISC",
             "path": "/aqua_modules/database/initialise.php"
         },
-        "auth": {
-            "name": "core",
+        "db": {
+            "name": "db",
             "version": "1.0.0",
             "license": "ISC",
             "path": "/aqua_modules/auth/initialise.php"
