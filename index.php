@@ -47,4 +47,17 @@ function import_modules($path){
     }
 }
 
+function import($path){
+    // return BASEPATH.$config_lock->packages->core->path;
+    global $config;
+    global $config_lock;
+    try {
+        eval('$path_name = $config->dependencies->'.$path.'->path;');
+        eval('$r = BASEPATH.$config_lock->packages->'.$path_name.'->path;');
+        return $r;
+    } catch (\Throwable $th) {
+        return $th;
+    }
+}
+
 require_once import_modules("core");

@@ -34,11 +34,11 @@
             "license": "ISC",
             "path": "/aqua_modules/database/initialise.php"
         },
-        "db": {
-            "name": "db",
+        "auth": {
+            "name": "core",
             "version": "1.0.0",
             "license": "ISC",
-            "path": "/aqua_modules/auth/initialise.php"
+            "path": "/aqua_modules/package/auth/initialise.php"
         }
     }
 }

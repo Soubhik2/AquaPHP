@@ -91,7 +91,7 @@ def set_package(data, command):
 
 def install(command):
     print(color_blue+"preparing to install... \n")
-    url = 'http://localhost/api'
+    url = 'https://aqua-php-package-service.vercel.app/api'
 
     commands = command.split()
 
