@@ -60,4 +60,21 @@ function import($path){
     }
 }
 
-require_once import_modules("core");
+try {
+    require_once import_modules("core");
+} catch (\Throwable $th) {
+    require_once import_modules("error");
+    $error = new UiError($th);
+
+    if ($config->config->project == "development") {
+        // echo '<pre>';
+        // echo '<h2>'.$th.'</h2>';
+        // echo '</pre>';
+        $error->display();
+    }
+
+    if ($config->config->project == "deploy") {
+        $error->displayError500();
+        // echo "<h1>500</h1>";
+    }
+}

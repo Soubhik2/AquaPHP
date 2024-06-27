@@ -11,28 +11,34 @@
             "path": "/aqua_modules/core.php"
         },
         "router": {
-            "name": "core",
+            "name": "router",
             "version": "1.0.0",
             "license": "ISC",
             "path": "/aqua_modules/router/initialise.php"
         },
         "controller": {
-            "name": "core",
+            "name": "controller",
             "version": "1.0.0",
             "license": "ISC",
             "path": "/aqua_modules/controller/initialise.php"
         },
         "model": {
-            "name": "core",
+            "name": "model",
             "version": "1.0.0",
             "license": "ISC",
             "path": "/aqua_modules/model/initialise.php"
         },
         "database": {
-            "name": "core",
+            "name": "database",
             "version": "1.0.0",
             "license": "ISC",
             "path": "/aqua_modules/database/initialise.php"
+        },
+        "error": {
+            "name": "error",
+            "version": "1.0.0",
+            "license": "ISC",
+            "path": "/aqua_modules/error/initialise.php"
         },
         "auth": {
             "name": "core",

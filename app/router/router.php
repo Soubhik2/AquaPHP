@@ -88,6 +88,16 @@ class Router extends AppRouter {
             echo $this->db->select('users',['email'=>"soubhik@gmail.com"])->count();
         });
 
+        $this->app->get("/b-test",function($req, $res){
+            // echo '<pre>';
+            // print_r($res);
+            // echo '</pre>';
+
+            $Test = $this->model->test;
+            echo "<br>".$Test->hello("PUBG");
+
+        });
+
         $this->app->get("/test",function($req, $res){   
             echo "/test <br>";
             $auth = new Auth($this->db);
@@ -138,11 +148,6 @@ class Router extends AppRouter {
         $this->app->get("/home",'Home/home');
         $this->app->post("/home",'Home/about');
         $this->app->get("/about",'Home/about');
-
-        // 404 page Note set this to the end
-        $this->app->get("/404",function($req, $res){
-            echo "this is /404";
-        });
 
     }
 }
