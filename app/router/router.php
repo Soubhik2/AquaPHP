@@ -8,7 +8,7 @@ class Router extends AppRouter {
 
         $this->app->get("/",function($req, $res){
             // echo "this is /";   
-            echo "<pre>";
+            // echo "<pre>";
             // SELECT
             // print_r($this->db->select("student", "WHERE `name` = 'soubhik1'")->get());
             // print_r($this->db->select("student")->get());
@@ -54,7 +54,7 @@ class Router extends AppRouter {
             //     echo "ERROR";
             // });
             
-            echo "</pre>";
+            // echo "</pre>";
 
             // $this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
             //     echo "<h1>$value->name</h1>";
@@ -93,7 +93,7 @@ class Router extends AppRouter {
             // print_r($res);
             // echo '</pre>';
 
-            $Test = $this->model->test;
+            $Test = $this->model->test1;
             echo "<br>".$Test->hello("PUBG");
 
         });
