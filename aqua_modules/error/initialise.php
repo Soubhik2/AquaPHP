@@ -6,6 +6,7 @@ class UiError {
         $error = [];
     
         // Extract basic error information
+        $error['type'] = get_class($th);
         $error['message'] = $th->getMessage();
         $error['file'] = $th->getFile();
         $error['line'] = $th->getLine();

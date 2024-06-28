@@ -60,8 +60,8 @@ class Router extends AppRouter {
             //     echo "<h1>$value->name</h1>";
             // });
 
-            // $Test = $this->model->test;
-            // echo "<br>".$Test->hello("PUBG");
+            $Test = $this->model->test1;
+            echo "<br>".$Test->hello("PUBG");
 
             // RES
             // $res->status(200)->send('welcome');

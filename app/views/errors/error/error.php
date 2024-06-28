@@ -1,9 +1,31 @@
-<h1>ERROR</h1>
 <?php $errors = json_decode($this->errorJson) ?>
-<h3>Message: <?php echo $errors->message ?></h3>
-<h3>File: <?php echo $errors->file ?> line: (<?php echo $errors->line ?>)</h3>
-<h3>
-    <pre>
-        <?php echo $this->trace ?>
-    </pre>
-</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="<?= url('public/asset/aqua.png') ?>">
+    <link rel="stylesheet" href="<?= url('public/style/error.css') ?>">
+</head>
+<body>
+    <div class="container">
+        <h1><?= $errors->type ?></h1>
+        
+        <h3 style="color: red;">TypeError : <span style="margin: 10px;"><?= $errors->message ?></span></h3>
+        <h3>Source</h3>
+        <div class="source-box">
+            <div class="source-head">
+                <h4>File: <?php echo $errors->file ?> (<?php echo $errors->line ?>)</h4>
+            </div>
+            <div class="source-body">
+                <h3>
+                    <pre>
+                        <?php echo $this->trace ?>
+                    </pre>
+                </h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
