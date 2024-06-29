@@ -1,5 +1,6 @@
 <?php
 
+// require_once __DIR__.'/aqua_modules/error/handler.php';
 define("BASEPATH", __DIR__);
 $pass_url = 'AquaPHP';
 $localhost = $_SERVER["SERVER_NAME"];

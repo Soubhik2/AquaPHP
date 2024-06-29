@@ -16,12 +16,14 @@
         <h3>Source</h3>
         <div class="source-box">
             <div class="source-head">
-                <h4>File: <?php echo $errors->file ?> (<?php echo $errors->line ?>)</h4>
+                <h4><?php echo $errors->file ?> (<?php echo $errors->line ?>)</h4>
             </div>
+            <hr>
             <div class="source-body">
                 <h3>
-                    <pre>
-                        <?php echo $this->trace ?>
+                    <pre white-space: pre-wrap;>
+                        <?php //echo $this->trace ?>
+                        <?php echo $this->codeSnippet ?>
                     </pre>
                 </h3>
             </div>
