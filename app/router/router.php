@@ -63,8 +63,6 @@ class Router extends AppRouter {
             // $Test = $this->model->test;
             // echo "<br>".$Test->hello("PUBG");
 
-            require 'name';
-
             // RES
             // $res->status(200)->send('welcome');
             // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
