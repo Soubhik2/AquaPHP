@@ -71,7 +71,7 @@ class Router extends AppRouter {
             // $res->cookie('pass','hello');
             // $res->session("login",["user"=>"name", "pass"=>"pass"]);
 
-
+            // echo name;
             $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
 
         });

@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 // require_once __DIR__.'/aqua_modules/error/handler.php';
 define("BASEPATH", __DIR__);
 $pass_url = 'AquaPHP';
@@ -71,10 +71,12 @@ try {
         // echo '<pre>';
         // echo '<h2>'.$th.'</h2>';
         // echo '</pre>';
+        ob_end_clean();
         $error->display();
     }
 
     if ($config->config->project == "deploy") {
+        ob_end_clean();
         $error->displayError500();
         // echo "<h1>500</h1>";
     }
