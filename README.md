@@ -1,7 +1,9 @@
+<h1 style="display: flex; align-items: center;">
+<img src="https://mycode.freewebhostmost.com/downloads/aqua.png" height="45" alt="react logo"  />
+AquaPHP
+</h1> 
 
-# 🌌CORE-PHP 
-
-#### *🚀  This is CORE PHP custom framework.*
+#### *🚀  This is AquaPHP custom MVC framework.*
 
 
 
@@ -13,22 +15,17 @@
 <div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" height="40" alt="react logo"  />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" height="40" alt="bootstrap logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="bootstrap logo"  />
 </div>
 
 ## 🛠️ Installation Steps
-### 1. Via Script Installation
 
-*Please download this python script and save it in the 'htdocs' folder of your XAMPP installation.*
--> [cphp_initializr](https://mycode.freewebhostmost.com/downloads/cphp_initializr.py)
-
-*Now run this script  [__NOTE for run this script required `python` and `git` installed__]*
-
-### 2. Manually Installation
+### 1. Manually Installation
 
 *Please download this file and save it in the 'htdocs' folder of your XAMPP installation.*
 
-### Then change `CPHP` to your 📁 `{folder}` name.
+### Then change `AquaPHP` to your 📁 `{folder}` name 
+
 
 #### This is in your project folder first 📄 `.htaccess` file.
 ```
@@ -59,12 +56,15 @@ RewriteRule . /index.php [L]
 ```php
 $pass_url = 'CPHP';
 ```
+### OR 
+### Run `setup.py` and run `init` command
 ### Now run your project.
-[http://localhost/CPHP/](http://localhost/CPHP/) <--- change this to your file name
+[http://localhost/AquaPHP/](http://localhost/AquaPHP/) <--- change this to your file name
 
 ## 🍰 Features
 
-- Added bootstrap
+- MVC Ready
+- Easy to package install using `setup.py`
 - Very simple
 - Easy to use
 
@@ -86,6 +86,8 @@ $pass_url = 'CPHP';
 - [Configuration](#Configuration)
 - [Views](#Views)
 - [Routers](#Routers)
+- [Controller](#Controller)
+- [Model](#Model)
 - [Database](#Database)
 - [Input](#Input)
 - [Session](#Session)
@@ -93,18 +95,41 @@ $pass_url = 'CPHP';
 
 ### 🔻 <span id="Configuration">Configuration</span>
 
-You can locate it in the 📄 config.php file of your project's 📁 app/config folder.
+You can locate it in the 📄 config.json file of your project's 📁 AquaPHP folder.
 
-**⚪ router configuration**
+You can configure your project here
 
-You can configure your router here
-
-```php
-// AUTO, MANUAL (recommend)
-$router = "AUTO";
-$default_page = "welcome";
+```json
+{
+    "name": "AquaPHP",
+    "version": "1.0.0",
+    "description": "AquaPHP is a MVC framework",
+    "main": "index.php",
+    "type": "php framework",
+    "config": {
+        "project": "development",
+        "view_dir": "/app/views/",
+        "controller_dir": "/app/controller/",
+        "model_dir": "/app/model/",
+        "router_dir": "/app/router/",
+        "database": {
+            "host": "localhost",
+            "username": "root",
+            "password": "",
+            "database": "javajdbc"
+        }
+    },
+    "author": "Soubhik Mukherjee",
+    "license": "ISC",
+    "dependencies": {
+        "database": {
+            "enable": true,
+            "path": "database"
+        }
+    }
+}
 ```
-`AUTO` is used for file base routing. <br>
+`project` is used for file base routing. <br>
 `MANUAL` is used for routing path manually.<br>
 `$default_page` is used for set default page for `AUTO` routing
 
@@ -112,7 +137,7 @@ $default_page = "welcome";
 
 ```php
 // development, deploy
-$project = "development";
+"project": "development"
 ```
 `development` is for show errors and warnings. <br>
 `deploy` is for hide errors and warnings.
@@ -124,42 +149,26 @@ Here you can add you views files like `welcome.php`**
 
 ### 🔻 <span id="Routers">Routers</span>
 
-You can locate it in the 📄 routes.php file of your project's 📁 app/config folder.
+You can locate it in the 📄 Routes.php file of your project's 📁 app/router folder.
 
 This is a very basic index routing,
 ```php 
-$routes['/'] = 'welcome'; 
+$this->app->get("/",function($req, $res){
+    $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
+});
 ```
 
-**syntax**
-```php 
-$routes['{path}'] = '{file_name}'; 
-```
 It's get 📄 file from 📁 app/views folder
 
 __Dynamic paths__
 ```php
-$routes['/test/:any'] = 'test/$value';
-$routes['/admin/:num'] = 'admin/$id';
-```
-`:any` -> for any `var` like `char`, `string`, `number` etc. <br>
-`:num` -> for `number` only. <br>
-**note:** `:any` support multiple paths like this -> `$routes['/test/:any'] = 'test/$value/$id'`
-
-**syntax**
-
-```php
-// $routes['/test/:any'] = 'test/{your_variable}';
-$routes['/test/:any'] = 'test/$value';
+$this->app->get("/blog/{id}",function($req, $res){
+    echo $req->params->id; // <- to get id
+});
 ```
 
-for get data use this `$value` to you php code 🔻.
-```php
-//exmple
-<?php
-    echo $value;
-?>
-```
+__Dynamic paths__
+
 
 ### 🔻 <span id="Database">Database</span>
 
