@@ -32,7 +32,7 @@ AquaPHP
 Options -Indexes
 
 RewriteEngine On
-RewriteBase /CPHP/ <--- change here
+RewriteBase /AquaPHP/ <--- change here
 RewriteRule ^index\\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -54,7 +54,7 @@ RewriteRule . /index.php [L]
 
 #### And now change on 📄 `index.php`.
 ```php
-$pass_url = 'CPHP';
+$pass_url = 'AquaPHP';
 ```
 ### OR 
 ### Run `setup.py` and run `init` command
@@ -129,9 +129,6 @@ You can configure your project here
     }
 }
 ```
-`project` is used for file base routing. <br>
-`MANUAL` is used for routing path manually.<br>
-`$default_page` is used for set default page for `AUTO` routing
 
 **⚪ development configuration**
 
@@ -167,8 +164,56 @@ $this->app->get("/blog/{id}",function($req, $res){
 });
 ```
 
-__Dynamic paths__
+__Request `$req`__
 
+It's get all incoming requests like `params` `query` `body` `cookie` `session`
+
+__Accessing form data__
+
+`Using POST, GET, COOKIE, or SERVER Data`
+
+AquaPHP Framework comes with `$res` class that let you fetch POST, GET, COOKIE or SERVER items. The main advantage of using the provided methods rather than fetching an item directly ($_POST['something']) is that the methods will check to see if the item is set and return NULL if not. This lets you conveniently use data without having to test whether an item exists first. In other words, normally you might do something like this:
+
+```php
+$something = isset($_POST['something']) ? $_POST['something'] : NULL;
+```
+
+With Our’s built in class you can simply do this:
+
+```php
+$this->app->get("/blog",function($req, $res){
+    echo $req->body->something;
+});
+
+```
+
+**GET**
+
+**This method is identical to post(), only it fetches GET data.**
+```
+$this->app->get("/blog?something=name",function($req, $res){
+    echo $req->query->something;
+});
+```
+
+**COOKIES**
+
+**This method is identical to post() and get(), only it fetches cookie data:**
+```
+$this->app->get("/blog",function($req, $res){
+    echo $req->cookie->something;
+});
+```
+
+**Retrieving Session Data**
+
+Any piece of information from the session array is available through the $_SESSION superglobal:
+```
+$this->app->get("/blog",function($req, $res){
+    echo $req->session->something;
+});
+
+```
 
 ### 🔻 <span id="Database">Database</span>
 

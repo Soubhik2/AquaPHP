@@ -34,7 +34,7 @@ class Routers {
     public function post($req, $callbacks){
         $params = [];
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (($params = $this->findMatchedRoute($req)) || '/404' == $req) {
+            if (($this->req->params = $this->findMatchedRoute($req)) || '/404' == $req) {
                 if (is_string($callbacks)) {
                     $calls = explode('/', $callbacks);
                     $className = strtolower($calls[0]);
