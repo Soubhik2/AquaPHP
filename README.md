@@ -190,7 +190,7 @@ $this->app->get("/blog",function($req, $res){
 **GET**
 
 **This method is identical to post(), only it fetches GET data.**
-```
+```php
 $this->app->get("/blog?something=name",function($req, $res){
     echo $req->query->something;
 });
@@ -199,7 +199,7 @@ $this->app->get("/blog?something=name",function($req, $res){
 **COOKIES**
 
 **This method is identical to post() and get(), only it fetches cookie data:**
-```
+```php
 $this->app->get("/blog",function($req, $res){
     echo $req->cookie->something;
 });
@@ -208,7 +208,7 @@ $this->app->get("/blog",function($req, $res){
 **Retrieving Session Data**
 
 Any piece of information from the session array is available through the $_SESSION superglobal:
-```
+```php
 $this->app->get("/blog",function($req, $res){
     echo $req->session->something;
 });
@@ -223,7 +223,7 @@ $this->app->get("/blog",function($req, $res){
 
 You can locate it in the 📄 autoload.php file of your project's 📁 app/config folder and set:
 
-```
+```php
 $autoload['database'] = true;
 ```
 
