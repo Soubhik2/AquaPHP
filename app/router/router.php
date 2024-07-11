@@ -64,15 +64,16 @@ class Router extends AppRouter {
             // echo "<br>".$Test->hello("PUBG");
 
             // RES
+            // $res->send('welcome');
             // $res->status(200)->send('welcome');
-            // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
+            $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
             // $res->status(200)->json($this->db->select("student", ["name like"=>"%sou%"])->get());
 
             // $res->cookie('pass','hello');
             // $res->session("login",["user"=>"name", "pass"=>"pass"]);
 
             // echo name;
-            $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
+            // $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
 
         });
 

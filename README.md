@@ -212,7 +212,78 @@ Any piece of information from the session array is available through the $_SESSI
 $this->app->get("/blog",function($req, $res){
     echo $req->session->something;
 });
+```
 
+__Response `$res`__
+
+AquaPHP Framework comes with a `$req` class that lets you use it to send and render views.
+
+__Send Views__
+
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->send('welcome');
+});
+```
+
+You can also modify the HTTP response status.
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->status(200);
+    $res->send('welcome');
+});
+
+OR
+
+$this->app->get("/blog",function($req, $res){
+    $res->status(200)->send('welcome');
+});
+```
+__Rander Views__
+
+Remember, you can use the render method to pass variables from the controller to views.
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->render('welcome');
+    //OR
+    $res->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
+});
+```
+
+__JSON Views__
+
+You can use the json method to send JSON as a response.
+
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->json(["name"=>"game", "user"=>"hi"]);
+});
+```
+
+__Redirect Views__
+
+You can redirect pages using the redirect method.
+```php
+// This redirect only works for this project.
+$this->app->get("/blog",function($req, $res){
+    $res->redirect("home"); // home --> http://localhost/AquaPHP/home.
+});
+```
+If you want to redirect to a different URL, use the following code.
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->redirect("https://example.com/", false);
+});
+```
+
+
+**COOKIES**
+
+For setting cookies
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->cookie('pass','hello');
+});
 ```
 
 ### 🔻 <span id="Database">Database</span>

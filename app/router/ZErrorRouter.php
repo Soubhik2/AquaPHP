@@ -7,7 +7,7 @@ class ZErrorRouter extends AppRouter {
             // echo '<pre>';
             // print_r($req);
             // echo '</pre>';
-            $res->status(200)->render('errors/404/error');
+            $res->status(404)->render('errors/404/error');
         });
     }
 }
