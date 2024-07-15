@@ -8,10 +8,16 @@ class Router extends AppRouter {
 
         $this->app->get("/",function($req, $res){
             // echo "this is /";   
-            // echo "<pre>";
+            echo "<pre>";
             // SELECT
+            // print_r($this->conn);
+
+            // $sql = "SELECT * FROM student";
+            // print_r($this->db->query($sql)->get());
+
             // print_r($this->db->select("student", "WHERE `name` = 'soubhik1'")->get());
             // print_r($this->db->select("student")->get());
+            print_r($this->db->select("student", "WHERE `name` = 'soubhik1' LIMIT 20, 10"));
             // print_r($this->db->select("student", null, ["name"])->get());
             // print_r($this->db->select("student", ["id"=>"name", "or name"=>"game", "price >"=>"1000"]));
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
@@ -30,7 +36,7 @@ class Router extends AppRouter {
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>json_encode($v)));
 
             // INSERT
-            // $this->db->insert('student',["name"=>"test2", "city"=>"game"])->then(function($v){
+            // $this->db->insert('student',["name"=>"test1", "city"=>"game"])->then(function($v){
             //     print_r("DONE");
             // })->catch(function($e){
             //     print_r("ERROR");
@@ -54,7 +60,7 @@ class Router extends AppRouter {
             //     echo "ERROR";
             // });
             
-            // echo "</pre>";
+            echo "</pre>";
 
             // $this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
             //     echo "<h1>$value->name</h1>";
@@ -66,7 +72,7 @@ class Router extends AppRouter {
             // RES
             // $res->send('welcome');
             // $res->status(200)->send('welcome');
-            $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
+            // $res->status(200)->json(["name"=>"game", "user"=>"hi"]);
             // $res->status(200)->json($this->db->select("student", ["name like"=>"%sou%"])->get());
 
             // $res->cookie('pass','hello');

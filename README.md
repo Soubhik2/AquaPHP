@@ -286,37 +286,68 @@ $this->app->get("/blog",function($req, $res){
 });
 ```
 
+**Adding Session Data**
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->session('pass','hello');
+});
+```
+**Adding Session Data By Array**
+```php
+$this->app->get("/blog",function($req, $res){
+    $res->session(["user"=>"name", "pass"=>"pass"]);
+});
+```
+
+
 ### 🔻 <span id="Database">Database</span>
 
 **Using the Database Class**
 
 **Initializing a Database**
 
-You can locate it in the 📄 autoload.php file of your project's 📁 app/config folder and set:
+You can locate it in the 📄 config.json file of your project's main folder and set:
 
-```php
-$autoload['database'] = true;
+```json
+"dependencies": {
+    "database": {
+        "enable": true,
+        "path": "database"
+    }
+}
+
+// OR If you want to disable the database, you should do this.
+"dependencies": {
+    "database": {
+        "enable": false,
+        "path": "database"
+    }
+}
 ```
 
-You can locate it in the 📄 database.php file of your project's 📁 app/config folder.
+You can locate it in the 📄 config.json file of your project's main folder.
 
 **Configure your database here.**
-```php
-$database["host"] = '{localhost}';
-$database["username"] = '{user_name}';
-$database["password"] = '{password}';
-$database["database"] = '{database_name}';
+```json
+"config": {
+    "database": {
+        "host": "localhost",
+        "username": "root",
+        "password": "",
+        "database": "samething"
+    }
+}
 ```
 
-This framework use `$database` object but it also support `$conn` OOPS `mysqli`
+This framework use `$this->db` object but it also support `$this->conn` OOPS `mysqli`
 
 **So you can also use 🔻**
 ```php
 $sql = "SELECT * FROM student";
-$result = $conn->query($sql);
+$result = $this->conn->query($sql);
 ```
 
-This framework hava `$database` object and query builder classes for easy usage
+This framework have `$database` object and query builder classes for easy usage
 
 #### 🚀 How to use `$database`, `CRUD` ?
 
@@ -325,7 +356,7 @@ This framework hava `$database` object and query builder classes for easy usage
 ```php
 // 1. mysqli example
 $sql = "SELECT * FROM mytable";
-$result = $conn->query($sql);
+$result = $this->conn->query($sql);
 
 if ($result->num_rows > 0) {
     // Output data of each row
@@ -341,7 +372,7 @@ if ($result->num_rows > 0) {
 
 //2. Our $database object
 $sql = "SELECT * FROM mytable";
-$result = $database->query($sql)->result(); // It's return as a array of objects
+$result = $this->db->query($sql)->get(); // It's return as a array of objects
 ```
 **Query Builder Class**
 
@@ -353,7 +384,7 @@ $result = $database->query($sql)->result(); // It's return as a array of objects
 - [Updating Data](#Updating_Data)
 - [Deleting Data](#Deleting_Data)
 
-Our `$database` object hava also support's `Query Builder Class`
+Our `$this->db` object hava also support's `Query Builder Class`
 
 **🔻 <span id="Selecting_Data">Selecting Data</span>**
 
@@ -362,7 +393,7 @@ The following functions allow you to build SQL SELECT statements.<br>
 
 Runs the selection query and returns the result. Can be used by itself to retrieve all records from a table:
 ```php
-$query = $database->get('mytable'); // Produces: SELECT * FROM mytable
+$query = $this->db->select('mytable'); // Produces: SELECT * FROM mytable
 ```
 The second and third parameters enable you to set a limit and offset clause:
 
