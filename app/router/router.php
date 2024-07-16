@@ -17,8 +17,14 @@ class Router extends AppRouter {
 
             // print_r($this->db->select("student", "WHERE `name` = 'soubhik1'")->get());
             // print_r($this->db->select("student")->get());
-            print_r($this->db->select("student", "WHERE `name` = 'soubhik1' LIMIT 20, 10"));
+            // print_r($this->db->select("student")->count());
+            // print_r($this->db->select("student", ["title like"=>"%match%", "or body like"=>"%match%"]));
+            // print_r($this->db->select("student", "WHERE `name` = 'soubhik1' LIMIT 20, 10"));
             // print_r($this->db->select("student", null, ["name"])->get());
+            // print_r($this->db->select("student")->get(function ($value){
+            //     $value->name = 'any';
+            //     return $value;
+            // }));
             // print_r($this->db->select("student", ["id"=>"name", "or name"=>"game", "price >"=>"1000"]));
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(function($value){
             //     $value->name .= " set";
@@ -36,13 +42,14 @@ class Router extends AppRouter {
             // print_r($this->db->select("student", ["name like"=>"%sou%"])->get(fn($v)=>json_encode($v)));
 
             // INSERT
-            // $this->db->insert('student',["name"=>"test1", "city"=>"game"])->then(function($v){
+            // $this->db->insert('student',["name1"=>"test1", "city"=>"game"])->then(function($v){
             //     print_r("DONE");
             // })->catch(function($e){
-            //     print_r("ERROR");
+            //     print_r("ERROR: ".$e);
             // });
 
-            // print_r($this->db->insert('student',["name1"=>"test2", "city"=>"game"]));
+            print_r($this->db->insert('student',["name"=>"test2", "city"=>"gta"]));
+            // print_r($this->db->insert('student',["name1"=>"test2", "city"=>"game"])->value);
 
             // UPDATE
             // print_r($this->db->update('student', ["id"=>'31'], ["name"=>"test3", "city"=>"game"]));

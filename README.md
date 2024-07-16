@@ -316,7 +316,7 @@ You can locate it in the 📄 config.json file of your project's main folder and
     }
 }
 
-// OR If you want to disable the database, you should do this.
+// OR To disable the database, you should do the following.
 "dependencies": {
     "database": {
         "enable": false,
@@ -389,125 +389,146 @@ Our `$this->db` object hava also support's `Query Builder Class`
 **🔻 <span id="Selecting_Data">Selecting Data</span>**
 
 The following functions allow you to build SQL SELECT statements.<br>
-`$database->get();` 
+`$this->db->select();` 
 
 Runs the selection query and returns the result. Can be used by itself to retrieve all records from a table:
 ```php
 $query = $this->db->select('mytable'); // Produces: SELECT * FROM mytable
 ```
-The second and third parameters enable you to set a limit and offset clause:
+The second parameters enable you to set a where, limit and offset clause:
 
 ```php
-$query = $database->get('mytable', 10, 20);
+$query = $this->db->select("mytable", "WHERE `name` = 'anything'");
+$query = $this->db->select("mytable", "LIMIT 20, 10");
 
+// Executes: SELECT * FROM mytable WHERE `name` = 'anything'
 // Executes: SELECT * FROM mytable LIMIT 20, 10
 // (in MySQL. Other databases have slightly different syntax)
 ```
 
+The third parameters enable you to set select fields:
+```php
+$this->db->select("student", null, ["name"]);
+// Executes: SELECT `name` FROM mytable
+```
+
 You’ll notice that the above function is assigned to a variable named $query, which can be used to show the results:
 ```php
-$query = $this->db->get('mytable');
+$query = $this->db->select('mytable');
 
-foreach ($query->result() as $row)
+foreach ($query->get() as $row)
 {
     echo $row->title;
 }
-print_r('error: '.$database->error()); // show errors
 ```
 
 **🔻 <span id="Looking_for_Specific_Data">Looking for Specific Data</span>**
 
-`$database->where()`
 
 This function enables you to set WHERE clauses using one of four methods:
 
 **1. Simple key/value method:**
 
 ```php
-$database->where('name', $name); // Produces: WHERE name = 'Joe'
+$this->db->select("mytable", "WHERE `name` = 'Joe'");
+// Produces: SELECT * FROM mytable WHERE name = 'Joe'
+
+$this->db->select("mytable", ["name"=>"Joe"]);
+// Produces: SELECT * FROM mytable WHERE name = 'Joe'
 ```
 Notice that the equal sign is added for you.
 
 If you use multiple function calls they will be chained together with AND between them:
 
 ```php
-$database->where('name', $name);
-$database->where('title', $title);
-$database->where('status', $status);
+$this->db->select("mytable", ["name"=>$name, "title"=>$title, "status", $status]);
+
 // WHERE name = 'Joe' AND title = 'boss' AND status = 'active'
 ```
 
 **2. Custom key/value method:**
 
 ```php
-$database->where('name !=', $name);
-$database->where('id <', $id); // Produces: WHERE name != 'Joe' AND id < 45
+$this->db->select("mytable", ["name !="=>$name, "id <"=>$id]);
+// Produces: WHERE name != 'Joe' AND id < 45
 ```
-
-`$database->or_where()`
 
 This function is identical to the one above, except that multiple instances are joined by OR:
 
 ```php
-$database->where('name !=', $name);
-$database->or_where('id >', $id);  // Produces: WHERE name != 'Joe' OR id > 50
-```
-**Query grouping**
-
-```php
-$database->where('name !=', $name)->or_where('id >', $id);
+$this->db->select("mytable", ["name !="=>$name, "or id <"=>$id]);
 // Produces: WHERE name != 'Joe' OR id > 50
 ```
 
 **🔻 <span id="Looking_for_Similar_Data">Looking for Similar Data</span>**
-
-`$database->like()`
 
 This method enables you to generate LIKE clauses, useful for doing searches.
 
 **1. Simple key/value method:**
 
 ```php
-$database->like('title', 'match');
-// Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
+$this->db->select("mytable", ["title like"=>"%match%"]);
+// Produces: WHERE `title` LIKE '%match%'
 ```
 
 If you use multiple method calls they will be chained together with AND between them:
 ```php
-$database->like('title', 'match');
-$database->like('body', 'match');
-// WHERE `title` LIKE '%match%' ESCAPE '!' AND  `body` LIKE '%match% ESCAPE '!'
+$this->db->select("mytable", ["title like"=>"%match%", "body like"=>"%match%"]);
+// WHERE `title` LIKE '%match%' AND `body` LIKE '%match%
 ```
-
-If you want to control where the wildcard (%) is placed, you can use an optional third argument. Your options are ‘before’, ‘after’, ‘none’ and ‘both’ (which is the default).
-
-```php
-$database->like('title', 'match', 'before');    // Produces: WHERE `title` LIKE '%match' ESCAPE '!'
-$database->like('title', 'match', 'after');     // Produces: WHERE `title` LIKE 'match%' ESCAPE '!'
-$database->like('title', 'match', 'none');      // Produces: WHERE `title` LIKE 'match' ESCAPE '!'
-$database->like('title', 'match', 'both');      // Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
-```
-
-`$database->or_like()`
 
 This method is identical to the one above, except that multiple instances are joined by OR:
 
 ```php
-$database->like('title', 'match'); $database->or_like('body', $match);
-// WHERE `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'
+$this->db->select("mytable", ["title like"=>"%match%", "or body like"=>"%match%"]);
+// WHERE `title` LIKE '%match%' OR `body` LIKE '%match%
 ```
 **🔻 <span id="Counting_and_Results">Counting and Results</span>**
 
-`$database->get('mytable')->count()`
-
 Permits you to determine the number of rows in a particular Active Record query. Queries will accept Query Builder restrictors such as where(), or_where(), like(), or_like(), etc. Example:
 ```php
-echo $database->get('mytable')->count();  // Produces an integer, like 25
+echo $this->db->select('mytable')->count();  // Produces an integer, like 25
 ```
 
-1. `$database->get('contact')->result()` It's produces an object
-2. `$database->get('contact')->result_array()` It's produces an array
-3. `$database->get('contact')->result_json()` It's produces an json
+
+```php
+$result = $this->db->select('mytable')->get();  // It's produces an object
+```
+
+Our database supports the `get(function)` object callback.
+
+```php
+$this->db->select("student", null, ["name"])->get(function ($value){
+    print_r($value); // It's produces rows as objects.
+});
+
+// OR you can also do
+
+$result = $this->db->select("mytable")->get(function ($value){
+    $value->name = 'any'; // You have the option to adjust the values.
+    return $value; // Return the modified values
+});
+```
+
+```php
+$result = $this->db->select('mytable')->get(fn($v)=>(array)$v);  // It's produces an array
+```
+
+```php
+$result = $this->db->select('mytable')->get(fn($v)=>json_encode($v));  // It's produces an json
+```
+Completely use our callbacks object, Example.
+```php
+$result = $this->db->select("student", ["name like"=>"%jon%"])->get(function($value){
+    $arr = $this->db->select("contact", ["id"=>$value->id])->get()[0];
+
+    foreach ($arr as $key => $element) {
+        $value->$key = $element;
+    }
+
+    return $value;
+});
+```
 
 **🔻 <span id="Inserting_Data">Inserting Data</span>**
 
