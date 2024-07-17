@@ -48,7 +48,7 @@ class Router extends AppRouter {
             //     print_r("ERROR: ".$e);
             // });
 
-            print_r($this->db->insert('student',["name"=>"test2", "city"=>"gta"]));
+            // print_r($this->db->insert('student',["name"=>"test2", "city"=>"gta"]));
             // print_r($this->db->insert('student',["name1"=>"test2", "city"=>"game"])->value);
 
             // UPDATE

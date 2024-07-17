@@ -543,13 +543,36 @@ $data = array(
         'date' => 'My date'
 );
 
-$database->insert('mytable', $data);
+$result = $this->db->insert('mytable', $data);
+if($result->value){
+    echo "DONE";
+}else{
+    echo "ERROR";
+}
+
+// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+```
+
+Our `insert` method supports `then`&`catch`.
+```php
+$data = array(
+        'title' => 'My title',
+        'name' => 'My Name',
+        'date' => 'My date'
+);
+
+$this->db->insert('mytable', $data)->then(function($v){
+    print_r("DONE");
+})->catch(function($e){
+    print_r("ERROR: ".$e);
+});
+
 // Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
 ```
 
 **🔻 <span id="Updating_Data">Updating Data</span>**
 
-`$database->update()`
+`$this->db->update`
 
 Generates an update string and runs the query based on the data you supply. You can pass an **array** or an **object** to the function. Here is an example using an array:
 
@@ -560,13 +583,42 @@ $data = array(
         'date' => $date
 );
 
-$database->where('id', $id)->update('mytable', $data);
+$this->db->update('mytable', ["id"=>$id], $data);
+
+if($result->value){
+    echo "DONE";
+}else{
+    echo "ERROR";
+}
+
 // Produces:
 //
 //      UPDATE mytable
 //      SET title = '{$title}', name = '{$name}', date = '{$date}'
 //      WHERE id = $id
 ```
+
+Our `update` method supports `then`&`catch`.
+```php
+$data = array(
+        'title' => $title,
+        'name' => $name,
+        'date' => $date
+);
+
+$this->db->update('mytable', ["id"=>$id], $data)->then(function($v){
+    print_r("DONE");
+})->catch(function($e){
+    print_r("ERROR: ".$e);
+});
+
+// Produces:
+//
+//      UPDATE mytable
+//      SET title = '{$title}', name = '{$name}', date = '{$date}'
+//      WHERE id = $id
+```
+
 **🔻 <span id="Deleting_Data">Deleting Data</span>**
 
 `$this->db->delete()`
@@ -574,8 +626,20 @@ $database->where('id', $id)->update('mytable', $data);
 Generates a delete SQL string and runs the query.
 
 ```php
-$database->where('id', $id)->delete('mytable');  // Produces: // DELETE FROM mytable WHERE id = $id
+$this->db->delete('mytable', ["id"=>$id]); // Produces: DELETE FROM mytable WHERE id = $id
 ```
+
+Our `delete` method supports `then`&`catch`.
+```php
+$this->db->delete('mytable', ["id"=>$id])->then(function($v){
+    echo "DONE";
+})->catch(function($e){
+    echo "ERROR";
+});
+
+// Produces: DELETE FROM mytable WHERE id = $id
+```
+
 
 ### 🔻 <span id="Input">Input</span>
 
