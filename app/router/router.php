@@ -86,7 +86,7 @@ class Router extends AppRouter {
             // $res->session("login",["user"=>"name", "pass"=>"pass"]);
 
             // echo name;
-            // $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
+            $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
 
         });
 
@@ -107,9 +107,9 @@ class Router extends AppRouter {
             // print_r($res);
             // echo '</pre>';
 
-            $Test = $this->model->test1;
-            echo "<br>".$Test->hello("PUBG");
-
+            $Test = $this->model->test;
+            echo "<br>".$Test->hello("PUBG").'<br>';
+            echo url('/home');
         });
 
         $this->app->get("/test",function($req, $res){   

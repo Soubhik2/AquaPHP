@@ -89,9 +89,6 @@ $pass_url = 'AquaPHP';
 - [Controller](#Controller)
 - [Model](#Model)
 - [Database](#Database)
-- [Input](#Input)
-- [Session](#Session)
-- [Authentication](#Authentication)
 
 ### 🔻 <span id="Configuration">Configuration</span>
 
@@ -150,12 +147,21 @@ You can locate it in the 📄 Routes.php file of your project's 📁 app/router 
 
 This is a very basic index routing,
 ```php 
-$this->app->get("/",function($req, $res){
-    $res->status(200)->render('welcome',["name"=>"ram", "user"=>["name"=>"sam"]]);
-});
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Router extends AppRouter {
+    public function router() {
+        $this->app->get("/",function($req, $res){
+            $res->status(200)->render('welcome');
+        });
+    }
+}
 ```
 
-It's get 📄 file from 📁 app/views folder
+The app router supports two methods: `$this->app->get()` and `$this->app->post()`.
+
+It's get 📄 file from 📁 app/views folder 
 
 __Dynamic paths__
 ```php
@@ -299,6 +305,57 @@ $this->app->get("/blog",function($req, $res){
 });
 ```
 
+### 🔻 <span id="Controller">Controller</span>
+
+You should create a file named 📄 Home.php in the 📁 app/controller folder of your project.
+
+This is a very basic Controller.
+```php 
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Home extends AppController {
+    public function index($req, $res){
+        $res->status(200)->render('welcome');
+    }
+}
+```
+
+Using a controller from the router.
+
+**_The router callback is an internal controller._**
+
+```php
+$this->app->get("/",function($req, $res){
+    $res->status(200)->render('welcome');
+});
+```
+
+To use a controller, you should follow the code below:
+```php
+$this->app->get("/", "Home/index");
+```
+### 🔻 <span id="Model">Model</span>
+
+You should create a file named 📄 Test.php in the 📁 app/controller folder of your project.
+
+This is a very basic Model.
+```php 
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Test {
+    public function hello($str){
+        return "Hello $str";
+    }
+}
+```
+
+To use the model, you should follow the code below:
+```php
+$Test = $this->model->test;
+echo $Test->hello("someThing");
+```
 
 ### 🔻 <span id="Database">Database</span>
 
@@ -347,9 +404,9 @@ $sql = "SELECT * FROM student";
 $result = $this->conn->query($sql);
 ```
 
-This framework have `$database` object and query builder classes for easy usage
+This framework have `$this->db` object and query builder classes for easy usage
 
-#### 🚀 How to use `$database`, `CRUD` ?
+#### 🚀 How to use `$this->db`, `CRUD` ?
 
 **<span id="SELECT">Example SELECT Data from Database</span>**
 
@@ -370,7 +427,7 @@ if ($result->num_rows > 0) {
 }
 
 
-//2. Our $database object
+//2. Our $this->db object
 $sql = "SELECT * FROM mytable";
 $result = $this->db->query($sql)->get(); // It's return as a array of objects
 ```
@@ -641,278 +698,8 @@ $this->db->delete('mytable', ["id"=>$id])->then(function($v){
 ```
 
 
-### 🔻 <span id="Input">Input</span>
-
-**Using the Input Class**
-
-**Initializing a Input**
-
-You can locate it in the 📄 autoload.php file of your project's 📁 app/config folder and set:
-```
-$autoload['input'] = true;
-```
-
-The Input Class serves two purposes:
-
-1. It pre-processes global input data for security.
-2. It provides some helper methods for fetching input data and pre-processing it.
-
-**Accessing form data**<br>
-`Using POST, GET, COOKIE, or SERVER Data`
-
-CORE PHP Framework comes with helper methods that let you fetch POST, GET, COOKIE or SERVER items. The main advantage of using the provided methods rather than fetching an item directly ($_POST['something']) is that the methods will check to see if the item is set and return NULL if not. This lets you conveniently use data without having to test whether an item exists first. In other words, normally you might do something like this:
-
-```php
-$something = isset($_POST['something']) ? $_POST['something'] : NULL;
-```
-
-With Our’s built in methods you can simply do this:
-```php
-$something = $input->post('something');
-```
-
-The main methods are:
-
-- `$input->post()`
-- `$input->get()`
-- `$input->cookie()`
-
-**POST**
-
-**The first parameter will contain the name of the POST item you are looking for:**
-
-```
-$input->post('some_data');
-```
-
-The method returns NULL if the item you are attempting to retrieve does not exist.
-
-The second optional parameter lets you run the data through the XSS filter. It’s enabled by setting the second parameter to boolean TRUE or by setting your $config['global_xss_filtering'] to TRUE.
-```
-$input->post('some_data', TRUE);
-To return an array of all POST items call without any parameters.
-```
-To return all POST items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
-```
-$input->post(NULL, TRUE); // returns all POST items with XSS filter
-$input->post(NULL, FALSE); // returns all POST items without XSS filter
-```
-
-**GET**
-
-**This method is identical to post(), only it fetches GET data.**
-```
-$input->get('some_data', TRUE);
-To return an array of all GET items call without any parameters.
-```
-To return all GET items and pass them through the XSS filter set the first parameter NULL while setting the second parameter to boolean TRUE.
-```
-$input->get(NULL, TRUE); // returns all GET items with XSS filter
-$input->get(NULL, FALSE); // returns all GET items without XSS filtering
-```
-
-**COOKIES**
-
-**This method is identical to post() and get(), only it fetches cookie data:**
-```
-$input->cookie('some_cookie');
-$input->cookie('some_cookie', TRUE); // with XSS filter
-```
-
-For setting cookies
-```
-$input->set_cookie("name1","hello");
-```
-syntax
-```
-$input->set_cookie($name, $value, $expires, $path, $domain, $secure, $httponly);
-```
-
-### 🔻 <span id="Session">Session</span>
-
-**Using the Session Class**
-
-**Initializing a Session**
-
-To initialize the Session class manually:
-
-You can locate it in the 📄 autoload.php file of your project's 📁 app/config folder and set:
-```
-$autoload['session'] = true;
-```
-Once loaded, the Sessions library object will be available using:
-```
-$session
-```
-
-**Retrieving Session Data**
-
-Any piece of information from the session array is available through the $_SESSION superglobal:
-```
-$_SESSION['item']
-```
-Or through the magic getter:
-```
-$session->item
-```
-And for backwards compatibility, through the userdata() method:
-```
-$session->userdata('item');
-```
-Where item is the array key corresponding to the item you wish to fetch. For example, to assign a previously stored ‘name’ item to the $name variable, you will do this:
-```
-$name = $_SESSION['name'];
-
-// or:
-
-$name = $session->name
-
-// or:
-
-$name = $session->userdata('name');
-```
-
-**Adding Session Data**
-
-Let’s say a particular user logs into your site. Once authenticated, you could add their username and e-mail address to the session, making that data globally available to you without having to run a database query when you need it.
-
-You can simply assign data to the `$_SESSION` array, as with any other variable. Or as a property of `session`.
-
-Alternatively, the old method of assigning it as “userdata” is also available. That however passing an array containing your new data to the `set_userdata()` method:
-```
-$session->set_userdata('some_name', 'some_value');
-```
-
-If you want to verify that a session value exists, simply check with `isset()`:
-```
-// returns FALSE if the 'some_name' item doesn't exist or is NULL,
-// TRUE otherwise:
-isset($_SESSION['some_name'])
-```
-Or you can call `has_userdata()`:
-```
-$session->has_userdata('some_name');
-```
-
-**Removing Session Data**
-
-Just as with any other variable, unsetting a value in `$_SESSION` can be done through `unset()`:
-```
-unset($_SESSION['some_name']);
-// or multiple values:
-
-unset(
-        $_SESSION['some_name'],
-        $_SESSION['another_name']
-);
-```
-
-Also, just as `set_userdata()` can be used to add information to a session, `unset_userdata()` can be used to remove it, by passing the session key. For example, if you wanted to remove ‘some_name’ from your session data array:
-```
-$session->unset_userdata('some_name');
-```
-
-This method also accepts an array of item keys to unset:
-```
-$array_items = array('username', 'email');
-
-$session->unset_userdata($array_items);
-```
-
-**Destroying a Session**
-
-To clear the current session (for example, during a logout), you may simply use either PHP’s `session_destroy()` function, or the `sess_destroy()` method. Both will work in exactly the same way:
-```
-session_destroy();
-
-// or
-
-$session->sess_destroy();
-```
-
-### 🔻 <span id="Authentication">Authentication</span>
-
-Authentication Library is a read to use auth system
-
-**Using the Auth Class**
-
-Initializing a Auth
-
-It's support email and password verify it's `return object("error"=>0, "error_mess"=>"", "error_code"=>"");`
-
-```
-$autoload['auth'] = true; <- in the autoload.php
-$auth = new Auth($database);
-```
-It's also support custom reference
-```
-$auth = new Auth($database, 'mytable', 'user', 'pass');
-```
-It's Default Table is `users` and fields are `email` and `password`, you can also customise this:
-```
-$auth->setTableName('mytable');
-$auth->setEmailName('user');
-$auth->setPasswordName('pass');
-```
-
-**Sign Up**
-```
-$arr =  [   // Those are extra fields
-            "name"=>"user name",
-            "phone"=>"+91 9000000000",
-        ];
-$result = $auth->signUp($email, $password, $arr);
-
-if(!$result->error){
-    echo "Successfully Signed up";
-}else{
-    echo $result->error_mess;
-}
-```
-The 4th parameter is for disable email verify<br>
-The 5th parameter is for disable password verify<br>
-```
-$result = $auth->signUp($email, $password, $arr, false, false);
-//                                                 ^      ^    
-```
-
-**Sign in**
-```
-$result = $auth->signIn($email, $password);
-
-if(!$result->error){
-    echo "Successfully Signed in";
-}else{
-    echo $result->error_mess;
-}
-```
-
-**Check Loggedin**
-```
-$auth->isLoggedin();
-
-//or
-
-if ($auth->isLoggedin()) {
-    echo "YES";
-} else {
-    echo "NO";
-}
-```
-
-**Get logged in User data**
-```
-$user = $auth->getUser();
-```
-
-**Logout**
-```
-$auth->logout();
-```
-
-
 <!--![Logo](https://cdn-icons-png.flaticon.com/128/528/528261.png)-->
-<img src="https://static-00.iconduck.com/assets.00/php-icon-2048x2048-79jhb719.png" height="200" alt="react logo" />
+<!--<img src="https://static-00.iconduck.com/assets.00/php-icon-2048x2048-79jhb719.png" height="200" alt="react logo" />-->
 <!--
 <a id="hello"></a>
 # Hello

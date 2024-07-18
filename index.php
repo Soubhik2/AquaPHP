@@ -33,8 +33,11 @@ if (file_exists($load_config_lock)) {
 // print_r($config_lock);
 // echo "</pre>";
 
-function url($a_url){
-    return BASEURL.$a_url;
+function url($url){
+    $url = BASEURL.$url;
+    $url = str_replace("//","/",$url);
+    $url = str_replace(":/","://",$url);
+    return $url;
 }
 
 function import_modules($path){
