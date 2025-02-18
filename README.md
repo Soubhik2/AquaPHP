@@ -1,5 +1,5 @@
 <h1 style="display: flex; align-items: center;">
-<img src="https://mycode.freewebhostmost.com/downloads/aqua.png" height="45" alt="react logo"  />
+<img src="https://github.com/Soubhik2/AquaPHP/blob/master/public/asset/aqua.png" height="45" alt="logo"  />
 AquaPHP
 </h1> 
 
