@@ -39,12 +39,6 @@
             "version": "1.0.0",
             "license": "ISC",
             "path": "/aqua_modules/error/initialise.php"
-        },
-        "auth": {
-            "name": "core",
-            "version": "1.0.0",
-            "license": "ISC",
-            "path": "/aqua_modules/package/auth/initialise.php"
         }
     }
 }
