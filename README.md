@@ -22,7 +22,7 @@ AquaPHP
 
 Run 
 ```
-git clone https://github.com/Soubhik2/AquaPHP.git
+git clone https://github.com/Soubhik2/AquaPHP.git your_folder_name
 ```
 to download the repository.
 
