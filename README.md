@@ -20,7 +20,11 @@ AquaPHP
 
 ## 🛠️ Installation Steps
 
-Run `git clone https://github.com/Soubhik2/AquaPHP.git` to download the repository.
+Run 
+```
+git clone https://github.com/Soubhik2/AquaPHP.git
+```
+to download the repository.
 
 ### 1. Script Installation
 
