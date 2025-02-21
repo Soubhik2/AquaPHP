@@ -20,9 +20,32 @@ AquaPHP
 
 ## 🛠️ Installation Steps
 
-### 1. Manually Installation
+Run `git clone https://github.com/Soubhik2/AquaPHP.git` to download the repository.
 
-*Please download this file and save it in the 'htdocs' folder of your XAMPP installation.*
+### 1. Script Installation
+
+There are two ways to initialize this repository.
+
+- via setup.exe
+- or setup.pyc
+
+For setup by `setup.exe`, we need to run `setup.exe` first and then run the `init` command into it.
+
+For setup by setup.pyc.<br>
+To set up the project, first ensure Python is installed.<br>
+After that, run the command 
+```
+pip install -r requirements.txt
+```
+Then, execute 
+```
+python setup.py
+```
+and finally, run the `init` command.
+
+### 2. Manually Installation
+
+*Please download the file and save it in the 'htdocs' folder of your XAMPP installation.*
 
 ### Then change `AquaPHP` to your 📁 `{folder}` name 
 
