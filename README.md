@@ -43,7 +43,7 @@ pip install -r requirements.txt
 ```
 Then, execute 
 ```
-python setup.py
+python setup.pyc
 ```
 and finally, run the `init` command.
 
